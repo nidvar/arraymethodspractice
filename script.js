@@ -14,15 +14,15 @@ const grab_data=()=>{
         })
         document.querySelector('.screen').innerHTML = ''
         people.forEach(a=>{
-            add_user(a.name)
+            add_user(a.name, a.wealth)
         })
     })
     .catch(error=>console.log(error))
 }
 
-const add_user=(name)=>{
+const add_user=(name, wealth)=>{
     const person = document.createElement('p');
-    person.textContent = name
+    person.textContent = name+': ' + ' ' + '$'+wealth
     document.querySelector('.screen').appendChild(person)
 }
 
