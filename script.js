@@ -6,7 +6,7 @@ const grab_data=()=>{
     .then(data=>{
         people.push({
             name: data.results[0].name.first +' '+ data.results[0].name.last,
-            wealth: Math.floor(Math.random()*10000000)
+            wealth: Math.floor(Math.random()*2000000)
         })
         document.querySelector('.screen').innerHTML = ''
         people.forEach(a=>{
@@ -40,8 +40,33 @@ const sort_by_riches = ()=>{
 
 const add_user=(name, wealth)=>{
     const person = document.createElement('p');
-    person.textContent = name+': ' + ' ' + '$'+wealth
+    person.textContent = `${name}: $${wealth}`
     document.querySelector('.screen').appendChild(person)
+}
+
+const sort_millionaires=()=>{
+    const x = people.filter(a=>{
+        if(a.wealth >= 1000000){
+            return true
+        }
+    })
+    console.log(x)
+    document.querySelector('.screen').innerHTML = ''
+    x.forEach(a=>{
+        add_user(a.name, a.wealth)
+    })
+}
+
+const reduce_function=()=>{
+    const x = [];
+    people.forEach(a=>{
+        x.push(a.wealth)
+    })
+    console.log(x)
+    const y = x.reduce((acc,curr)=>{
+        return acc+curr
+    })
+    return y
 }
 
 document.querySelector('.add_user').addEventListener('click',()=>{
@@ -62,4 +87,22 @@ document.querySelector('.sort_by_riches').addEventListener('click',()=>{
         return
     }
     sort_by_riches();
+})
+
+document.querySelector('.sort_millionaires').addEventListener('click',()=>{
+    if(people.length===0){
+        alert('No users')
+        return
+    }
+    sort_millionaires();
+})
+
+document.querySelector('.reduce_function').addEventListener('click',()=>{
+    if(people.length===0){
+        alert('No users')
+        return
+    }
+    const person = document.createElement('h4');
+    person.textContent = `Total Wealth: $${reduce_function()}`
+    document.querySelector('.screen').appendChild(person)
 })
